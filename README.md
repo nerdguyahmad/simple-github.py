@@ -6,10 +6,11 @@ A highly simple (experimental) wrapper for basic operations with GitHub API.
 
 ## Features
 This wrapper is very simple but for the sake of making this README large, Here are some features of this wrapper:
+
 - Easy to use and Organized
-- Wraps basic stuff
-- Object Oriented design
-- Both Sync & Async support
+- Wraps basic endpoints
+- Object Oriented design for ease of user
+- All objects & methods are [documented](https://github.com/nerdguyahmad/simple-github.py/wiki)
 
 ## Quickstart
 For more examples and brief docs, Read [Wiki](https://github.com/nerdguyahmad/simple-github.py/wiki)
