@@ -1,6 +1,6 @@
 # simplegithub.py
 
-### Precaution
+### :warning: Precaution
 
 This is a highly simple wrapper having very basic functionality. This is meant to be an experimental side project. Don't use it if you are looking for a wrapper that is complex and has a lot of functionality.
 
