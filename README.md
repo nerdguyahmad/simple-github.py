@@ -1,6 +1,6 @@
 ### :warning: Precaution
 
-This is a highly simple wrapper having very basic functionality. This is meant to be an experimental side project just for fun. Do not use it because it doesn't has a documentation (you have to be brave enough to read the source code). This wrapper is not a complex one so please use a wrapper that is documented and has more functionality. Though, you can help us document this wrapper. :') [Read this](https://github.com/nerdguyahmad/simple-github.py#contributions)
+This is a highly simple wrapper having very basic functionality. This is meant to be an experimental side project just for fun. Do not use it because it doesn't has a documentation (you have to be brave enough to read the source code). This wrapper is not a complex one so please use a wrapper that is documented and has more functionality. Though, you can help us document this wrapper. :')
 
 # simple-github.py
 
