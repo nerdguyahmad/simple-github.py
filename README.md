@@ -65,4 +65,4 @@ print(f"Dumped {len(content)} chars to content.txt")
 
 ## Contributions
 
-Feel free to contribute to this wrapper. Open an issue for breaking changes.
+Feel free to contribute to this wrapper. Open an issue for breaking changes. The only important contribution this repository needs is documentation. If you are brave enough to read the source code and document an object. That'd be a great contribution and your name will be on this Readme.
