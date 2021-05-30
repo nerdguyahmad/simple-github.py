@@ -15,6 +15,21 @@ This wrapper is very simple but for the sake of making this README large, Here a
 * Object Oriented design for ease of user
 * All attributes are same as provided by Github API.
 
+## Installation
+Installation is done using git. Make sure to install [Git](http://git-scm.com/) first. Run the following command in directory where you want to clone this package:
+```bash
+git clone https://github.com/nerdguyahmad/simple-github.py/
+```
+Then `cd` into the cloned directory
+```bash
+cd simple-github.py
+```
+Finally install:
+```bash
+python setup.py install
+```
+The libarary will now be useable anywhere (outside this directory too).
+
 ## Quickstart
 
 ### Fetching repository
