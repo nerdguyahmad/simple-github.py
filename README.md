@@ -17,8 +17,6 @@ This wrapper is very simple but for the sake of making this README large, Here a
 
 ## Quickstart
 
-For more examples and brief docs, Read [Wiki](https://github.com/nerdguyahmad/simple-github.py/wiki)
-
 ### Fetching repository
 ```python
 import simplegithub
@@ -44,7 +42,26 @@ for i in user_repos:
   print(i.fullname)
 ```
 
-***There are many more objects, methods and attributes that are not documented. If you want to see them, read the source code.***
+### Fetching gist
+```python
+import simplegithub
+
+client = simplegithub.Client()
+gist = client.fetch_gist('16717ba774786ca22071320ba88efc99') # Put your gist ID here. This returns `simplegithub.Gist` object
+print(f"Fetched a gist. Description: {gist.description}")
+
+"""Getting the raw content of one of the files of a gist and dumping it to a file"""
+file = gist.files[0]
+content = file.fetch_raw()
+
+with open('content.txt', 'w') as _:
+  _.write(content)
+  _.close()
+  
+print(f"Dumped {len(content)} chars to content.txt")
+```
+
+***There are objects, methods and attributes for objects that are not documented. If you want to see them, read the source code.***
 
 ## Contributions
 
