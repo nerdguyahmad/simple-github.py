@@ -42,7 +42,7 @@ for i in user_repos:
   print(i.fullname)
 ```
 
-### Fetching gist
+### Fetching gist (And optionally, dumping the content of one of the Gists file in a file called `content.txt`)
 ```python
 import simplegithub
 
