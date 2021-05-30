@@ -65,4 +65,4 @@ print(f"Dumped {len(content)} chars to content.txt")
 
 ## Contributions
 
-Feel free to contribute to this wrapper. Open an issue for breaking changes. The only thing other then more methods this wrapper needs is a documentation. If you are brave enough to read the source code and document it then resource you need is [here](for-contributor/make-the-doc.MD).
+Feel free to contribute to this wrapper. Open an issue for breaking changes.
