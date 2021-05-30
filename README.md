@@ -42,7 +42,7 @@ repo = client.fetch_repository('nerdguyahmad/simple-github.py') # simplegithub.R
 print(repo.fullname, repo.owner.login) # There are more attributes.
 ```
 
-### Fetching User (and optionally, repository of users)
+### Fetching User
 ```python
 import simplegithub
 
@@ -57,7 +57,7 @@ for i in user_repos:
   print(i.fullname)
 ```
 
-### Fetching gist (And optionally, dumping the content of one of the Gists file in a file called `content.txt`)
+### Fetching gist
 ```python
 import simplegithub
 
