@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Files
+.gitignore
+content.txt
+main.py
+makethedoc.py
