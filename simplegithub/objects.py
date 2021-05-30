@@ -105,7 +105,57 @@ class User:
 			list[simplegithub.Gist]
 		"""
 		gists = self._session.get(f'{BASE_URL}/users/{self.login}/gists').json()
-		return [Gist(gist) for gist in gists]
+		return [PartialGist(gist) for gist in gists]
+
+	def fetch_subscriptions(self):
+		"""Fetches the repositories user has subscribed to.
+		
+		Returns:
+			list[simplegithub.PartialRepository]
+		"""
+		subs = self._session.get(f'{BASE_URL}/users/{self.login}/subscriptions').json()
+		return [PartialRepository(sub) for sub in subs]
+
+class ChangeStatus:
+	'''Represents the changes of a history item'''
+	def __init__(self, data):
+		for key in data:
+			setattr(self, key, data[key])
+
+class HistoryItem:
+	'''Represents a history item of a Gist revision history'''
+	def __init__(self, data):
+		for key in data:
+			if key == 'user':
+				setattr(self, key, PartialUser(data[key]))
+			elif key == 'owner':
+				setattr(self, key, PartialUser(data[key]))
+			elif key == 'change_status':
+				setattr(self, key, ChangeStatus(data[key]))
+			else:
+				setattr(self, key, data[key])
+
+class PartialGist:
+	'''Represents a partial gist. (This doesn't has history and some other attributes)'''
+	def __init__(self, data):
+		for key in data:
+			if key == 'files':
+				self.files = []
+				for file in data[key].keys():
+					self.files.append(File(name=file, data=data[key][file]))
+			elif key == 'owner':
+				setattr(self, key, PartialUser(data[key]))
+
+			else:
+				setattr(self, key, data[key])
+
+		self._session = requests.Session()
+
+	def fetch_gist(self):
+		'''Returns the Gist object of this partial Gist'''
+		resp = self._session.get(self.url)
+		return Gist(resp.json())
+
 
 class Gist:
 	'''Represents a github gist.
@@ -120,8 +170,12 @@ class Gist:
 		for key in data:
 			if key == 'files':
 				self.files = []
-				for file in self.files:
-					self.files.append(File(file))
+				for file in data[key].keys():
+					self.files.append(File(name=file, data=data[key][file]))
+			elif key == 'owner':
+				setattr(self, key, PartialUser(data[key]))
+			elif key == 'history':
+				setattr(self, key, [HistoryItem(x) for x in data[key]])
 			else:
 				setattr(self, key, data[key])
 
@@ -140,20 +194,24 @@ class Gist:
 		Returns:
 			list[simplecord.Gist]
 		"""
-		resp = self._session.get(self.forks_url)
-		return [Commit(x) for x in resp.json()]
+		resp = self._session.get(self.forks_url).json()
+		# No class for commit yet exists so this returns the list raw dict objects.
+		return [x for x in resp]
+
+
 
 class File:
-	'''Represents a github file.
+	'''Represents a github file (generally returned from gists).
 
 	Attributes
 	----------
 	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/file#attributes
 
-
 	'''
-	def __init__(self, data):
-		...
+	def __init__(self, name, data):
+		self.name = name
+		for key in data.keys():
+			setattr(self, key, data[key])
 		
 
 class License:
@@ -176,17 +234,17 @@ class Item:
 
 		self._session = requests.Session()
 
-	def fetch_dir(self, dir):
+	def fetch_dir(self):
 		"""Fetches the items of a directory
 
 		Returns:
 			list[Item]
 		"""
-		if not dir.type == 'dir':
+		if not self.type == 'dir':
 			raise TypeError("The item is not a directory.")
 			return
 
-		resp = self.session.get(dir._links['self']).json()
+		resp = self._session.get(self._links['self']).json()
 		return [Item(item) for item in resp]
 
 class PartialRepository:
