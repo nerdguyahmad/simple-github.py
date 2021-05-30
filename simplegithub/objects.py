@@ -2,16 +2,7 @@ from .constants import BASE_URL
 import requests
 
 class Repository:
-	'''Represents a github *proper* repository. This has more functionality then partial one.
-	
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/repository#attributes
-
-	Methods
-	-------
-	See all methods at https://nerdguyahmad.gitbook.io/simplegithub/objects/repository#methods
-	'''
+	'''Represents a github *proper* repository. This has more functionality then partial one.'''
 	def __init__(self, data):
 		_objects = {
 			"license": PartialLicense,
@@ -46,16 +37,7 @@ class Repository:
 
 
 class User:
-	"""Represents a *proper* user. This has a lot more then simplegithub.PartialUser class.
-	
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/user#attributes
-
-	Methods
-	-------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/user#methods
-	"""
+	"""Represents a *proper* user. This has a lot more then simplegithub.PartialUser class."""
 	def __init__(self, data):
 		for key in data:
 			setattr(self, key, data[key])
@@ -158,14 +140,7 @@ class PartialGist:
 
 
 class Gist:
-	'''Represents a github gist.
-
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/license#attributes
-
-
-	'''
+	'''Represents a github gist.'''
 	def __init__(self, data):
 		for key in data:
 			if key == 'files':
@@ -201,27 +176,24 @@ class Gist:
 
 
 class File:
-	'''Represents a github file (generally returned from gists).
-
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/file#attributes
-
-	'''
+	'''Represents a github file (generally returned from gists).'''
 	def __init__(self, name, data):
 		self.name = name
 		for key in data.keys():
 			setattr(self, key, data[key])
-		
+
+		self._session = requests.Session()
+
+	def fetch_raw(self):
+		"""This fetches the raw content of the file. (Basically gets the file src)"""
+		resp = self._session.get(self.raw_url)
+		return resp.text
+
+
+
 
 class License:
-	"""Represents a *proper* license. This has a lot more then simplegithub.PartialLicense class.
-	
-	Attributes
-	----------
-
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/license#attributes
-	"""
+	"""Represents a *proper* license. This has a lot more then simplegithub.PartialLicense class."""
 	def __init__(self, data):
 		for key in data:
 			setattr(self, key, data[key])
@@ -248,16 +220,7 @@ class Item:
 		return [Item(item) for item in resp]
 
 class PartialRepository:
-	'''Represents a github *partial* repository
-	
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/partial-repository#attributes
-
-	Methods
-	-------
-	See all methods at https://nerdguyahmad.gitbook.io/simplegithub/objects/partial-repository#methods
-	'''
+	'''Represents a github *partial* repository'''
 	def __init__(self, data):
 		for key in data:
 			setattr(self, key, data[key])
@@ -274,16 +237,7 @@ class PartialRepository:
 		return Repository(resp.json())
 
 class PartialUser:
-	'''Represents a *partial* user. A partial user doesn't has everything a User has.
-
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/partial-user#attributes
-	
-	Methods
-	-------
-	See all methods at https://nerdguyahmad.gitbook.io/simplegithub/objects/partial-user#methods
-	'''
+	'''Represents a *partial* user. A partial user doesn't has everything a User has.'''
 	def __init__(self, data):
 		for key in data:
 			setattr(self, key, data[key])
@@ -302,16 +256,7 @@ class PartialUser:
 
 
 class PartialLicense:
-	"""Represents a *partial* license. A partial license doesn't has entire detail of license.
-
-	Attributes
-	----------
-	See all attributes at https://nerdguyahmad.gitbook.io/simplegithub/objects/partial-license#attributes
-
-	Methods
-	-------
-	See all methods at https://nerdguyahmad.gitbook.io/simplegithub/objects/partial-repository#methods
-	"""
+	"""Represents a *partial* license. A partial license doesn't has entire detail of license."""
 	def __init__(self, data):
 		for key in data:
 			setattr(self, key, data[key])

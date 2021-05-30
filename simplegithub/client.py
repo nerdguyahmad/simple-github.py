@@ -4,6 +4,7 @@ from .objects import *
 import requests
 
 class Client:
+	'''This is the main class to interact with API'''
 	def __init__(self):
 		self._session = requests.Session()
 
@@ -15,6 +16,9 @@ class Client:
 
 		Returns:
 			simplegithub.Repository
+
+		Raises:
+			simplegithub.NotFound
 		"""
 		resp = self._session.get(f'{BASE_URL}/repos/{repository}')
 		
@@ -35,6 +39,9 @@ class Client:
 
 		Returns:
 			simplegithub.User
+
+		Raises:
+			simplegithub.NotFound
 		"""
 		resp = self._session.get(f'{BASE_URL}/users/{user}')
 
@@ -43,3 +50,52 @@ class Client:
 
 		if resp.status_code == 404:
 			raise NotFound(resp.json()['message'])
+
+		if resp.status_code == 403:
+			print(resp.json()['message'])
+
+	def fetch_gist(self, id:str=None):
+		"""Fetches a gist.
+
+		Parameters:
+			id (str) : The ID of the gist.
+
+		Returns:
+			simplegithub.Gist
+
+		Raises:
+			simplegithub.NotFound
+		"""
+		resp = self._session.get(f'{BASE_URL}/gists/{id}')
+
+		if resp.status_code == 200:
+			return Gist(resp.json())
+
+		if resp.status_code == 404:
+			raise NotFound(resp.json()['message'])
+
+		if resp.status_code == 403:
+			print(resp.json()['message'])
+
+	def fetch_license(self, key:str=None):
+		"""Fetches a license.
+
+		Parameters:
+			key (str) : The license key. e.g `mit`
+
+		Returns:
+			simplegithub.License
+
+		Raises:
+			simplegithub.NotFound
+		"""
+		resp = self._session.get(f'{BASE_URL}/licenses/{key}')
+
+		if resp.status_code == 200:
+			return License(resp.json())
+
+		if resp.status_code == 404:
+			raise NotFound(resp.json()['message'])
+
+		if resp.status_code == 403:
+			print(resp.json()['message'])
